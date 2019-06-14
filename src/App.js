@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchPokemons } from './services/fetchAPI';
+import {fetchPokemons} from './services/fetchAPI';
 import './App.css';
 
 class App extends React.Component {
@@ -7,7 +7,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      pokemons: []
+      pokemonsArr: []
     }
 
     this.getPokemons = this.getPokemons.bind(this);
@@ -18,16 +18,22 @@ class App extends React.Component {
   }
 
   getPokemons() {
-    fetchPokemons().then(data => { 
-      console.log(data)
-    })
+    fetchPokemons()
+    .then(data => data.results.map(item => {
+        fetch(item.url)
+          .then(dataResults => dataResults.json())
+          .then(finalData => 
+            console.log(finalData))
+    }))
   }
 
   render() {
-
     return (
-      <div className="App">
-        
+      <div className="pokemon__container">
+        <div className="pokemon__filter">
+          <label htmlFor="input"></label>
+          <input type="text"/>
+        </div>
       </div>
     )  
   }
