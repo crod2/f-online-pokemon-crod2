@@ -22,17 +22,23 @@ class App extends React.Component {
     .then(data => data.results.map(item => {
         fetch(item.url)
           .then(dataResults => dataResults.json())
-          .then(finalData => 
-            console.log(finalData))
+          .then(finalData => {
+            this.setState({ pokemonsArr : finalData })})
     }))
   }
 
   render() {
+    const { pokemonsArr } = this.state;
     return (
       <div className="pokemon__container">
         <div className="pokemon__filter">
           <label htmlFor="input"></label>
           <input type="text"/>
+          <ul className="pokemon__info">
+          { pokemonsArr.map(info => 
+            <li>{info.name}</li>
+            )}
+          </ul>
         </div>
       </div>
     )  
